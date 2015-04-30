@@ -33,3 +33,13 @@
 				number-button(number=0)
 			.four.columns
 				equate-button
+	.two.columns
+		operator-button(operator="+")
+		operator-button(operator="-")
+		operator-button(operator="x")
+		operator-button(operator="/")
+	.four.columns
+		mutation-button(name="Clear", mutator="calculatorController.resetModel()")
+		mutation-button(name="Sin", mutator="calculatorController.mutatorSin()")
+		mutation-button(name="Cos", mutator="calculatorController.mutatorCos()")
+		mutation-button(name="+/-", mutator="calculatorController.flipSign()")

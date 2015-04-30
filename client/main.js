@@ -37,8 +37,14 @@ app.directive("numberButton", function() {
 app.directive("decimalButton", function() {
 	return require('./directives/decimalButton.js')
 });
+app.directive("operatorButton", function() {
+	return require('./directives/operatorButton.js')
+});
 app.directive("equateButton", function() {
 	return require('./directives/equateButton.js')
+});
+app.directive("mutationButton", function() {
+	return require('./directives/mutationButton.js')
 });
 app.directive("numberView", function() {
 	return require('./directives/numberView.js')
