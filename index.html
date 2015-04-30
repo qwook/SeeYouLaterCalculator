@@ -1,0 +1,33 @@
+<!-- This is the index.jade file.-->
+<!-- In the end, it will be translated to HTML.-->
+<!-- I included the bare basics for the client code to run-->
+<!-- as well as the CSS files to add style to the calculator.-->
+<!-- This is basically the "home page" of our calculator application.-->
+<!-- The client will render everything else such as buttons and inputs.--><!DOCTYPE html>
+<html lang="en" ng-app="calculatorApp">
+  <head>
+    <title>Express</title>
+    <!-- Allows mobile support-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Links the css file-->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="vendor/skeleton/css/normalize.css">
+    <link rel="stylesheet" href="vendor/skeleton/css/skeleton.css">
+    <link rel="stylesheet" href="public/css/custom.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="docs-section">
+        <h6 class="docs-header">SEE YOU LATER, CALCULATOR</h6>
+        <p>Kristen, Henry, Joseph, "Asia", Vince</p>
+      </div>
+      <hr>
+      <calculator ng-controller="CalculatorController as calculatorController"></calculator>
+    </div>
+    <!-- Give some padding at the bottom of the page-->
+    <div style="margin-bottom: 60px;"></div>
+    <!-- Script files are loaded once everything on the page is done loading.-->
+    <script type="text/javascript" src="/vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="/public/javascripts/bundle.js"></script>
+  </body>
+</html>
