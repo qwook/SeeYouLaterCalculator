@@ -1,0 +1,37 @@
+// This is the index.jade file.
+// In the end, it will be translated to HTML.
+
+// I included the bare basics for the client code to run
+// as well as the CSS files to add style to the calculator.
+
+// This is basically the "home page" of our calculator application.
+// The client will render everything else such as buttons and inputs.
+
+doctype
+html(lang="en", ng-app="calculatorApp")
+	head
+		title Express
+		
+		// Allows mobile support
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+
+		// Links the css file
+		link(href='//fonts.googleapis.com/css?family=Raleway:400,300,600', rel='stylesheet', type='text/css')
+		link(rel='stylesheet', href='vendor/skeleton/css/normalize.css')
+		link(rel='stylesheet', href='vendor/skeleton/css/skeleton.css')
+		link(rel='stylesheet', href='public/css/custom.css')
+
+	body
+		.container
+			.docs-section
+				h6.docs-header SEE YOU LATER, CALCULATOR
+				p Kristen, Henry, Joshua, "Asia", Vince
+			hr
+			calculator(ng-controller="CalculatorController as calculatorController")
+
+		// Give some padding at the bottom of the page
+		div(style="margin-bottom: 60px;")
+
+		// Script files are loaded once everything on the page is done loading.
+		script(type="text/javascript", src="/vendor/angular/angular.js")
+		script(type="text/javascript", src="/public/javascripts/bundle.js")

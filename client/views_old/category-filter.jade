@@ -1,0 +1,18 @@
+div.filter-column(ng-controller="CategoryFilterCtrl as filterCtrl")
+	.row
+		h6
+			strong Categories
+
+	.row
+		.six.columns
+			a.button.u-full-width.no-padding(ng-class="{'button-primary': !filterCtrl.blackListing}", ng-click="filterCtrl.whiteListMode()") All
+		.six.columns
+			a.button.u-full-width.no-padding(ng-class="{'button-primary': filterCtrl.blackListing}", ng-click="filterCtrl.blackListMode()") None
+
+	ul.filter-list
+		.filter-list-content
+			div(ng-repeat="filter in filterCtrl.filterList | filter:searchFilter")
+				li(ng-show="filterCtrl.list.indexOf(filter) == -1")
+					a(ng-click="filterCtrl.addFilter(filter)", ng-class="{'selected': !filterCtrl.blackListing}") {{filter}}
+				li(ng-show="filterCtrl.list.indexOf(filter) != -1")
+					a(ng-click="filterCtrl.removeFilter(filter)", ng-class="{'selected': filterCtrl.blackListing}") {{filter}}
