@@ -1,5 +1,5 @@
 # SeeYouLaterCalculator
-It's a calculator.
+It's a calculator. http://qwook.github.com/SeeYouLaterCalculator/
 
 # Understanding the Code
 I would recommend starting at `client/main.js`.  
