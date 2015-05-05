@@ -7,6 +7,22 @@ That is the starting point of the application.
 All the server does is delivers the client scripts to the browser.  
 The server code is practically boilerplate and not very important to the project.
 
+# Frameworks
+## Client:
+Angular - handles MVC  
+BabelJS - allows for usage of latest javascript version  
+	it just translates latest javascript version so that older javascript engines can use it.  
+Jade - translates to HTML, used for templates and defining the html of buttons and layout  
+  
+## Server:
+Browserify - compiles all the clientside scripts into one file
+Express - framework used to host the website (higher level than nodejs, allows hosting websites with smaller amounts of commands.)
+NodeJS - the engine used to host the website (built on C++/v8 interprets javascript)
+  
+## Development:
+Gulp which is used as like "make"  
+	automates commands needed to compile for client and server.
+  
 # Dependencies
 Node.JS and NPM:  
 https://nodejs.org/  
