@@ -1,3 +1,30 @@
+@import url(http://fonts.googleapis.com/css?family=Arimo);
+
+.button {
+  font-family: 'Arimo';
+  font-size: 10pt;
+  text-transform: none;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+number-view {
+  /*width: 100%;*/
+  display: block;
+  font-family: 'Arimo';
+  font-size: 14pt;
+  min-height: 50px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  background: #eee;
+  margin-bottom: 10px;
+}
+
 .container {
   max-width: 800px; }
 .header {
