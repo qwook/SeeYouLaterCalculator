@@ -29,7 +29,6 @@ module.exports = class CalculatorController {
 		}
 
 		this.model.right += number.toString();
-		console.log(number);
 	}
 
 	insertDecimal() {
@@ -103,8 +102,6 @@ module.exports = class CalculatorController {
 	}
 
 	flipSign() {
-		this.equate();
-
 		if (this.model.right == '') return;
 
 		this.model.right = (-1 * parseFloat(this.model.right)).toString();
