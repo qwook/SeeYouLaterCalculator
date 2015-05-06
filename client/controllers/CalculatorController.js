@@ -1,21 +1,22 @@
 
+var CalculatorModel = require('../models/CalculatorModel.js');
+
+/**
+ * Calculator Controller
+ * ----------------
+ * Calculator controller for MVC
+ *
+ **/
+
 module.exports = class CalculatorController {
 	constructor() {
 		// Define instance variables
-		this.model = {
-			left: '',
-			right: '',
-			operator: '',
-		};
+		this.model = new CalculatorModel();
 		this.insertingDecimal = false
 	}
 
 	resetModel() {
-		this.model = {
-			left: '',
-			right: '',
-			operator: ''
-		}
+		this.model = new CalculatorModel();
 		this.insertingDecimal = false;
 	}
 

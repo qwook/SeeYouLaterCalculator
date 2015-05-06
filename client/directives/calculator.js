@@ -4,7 +4,8 @@ module.exports = {
 	restrict: 'E',
 	template: require('./views/calculator.jade')(),
 	link: function(scope, element, attrs) {
-		angular.element(document).bind('keyup', function(event) {
+		// Keypresses emulate the button presses and calls the controller.
+		angular.element(document).bind('keydown', function(event) {
 			scope.$apply(function() {
 				switch (event.which) {
 					case 48:
@@ -45,10 +46,14 @@ module.exports = {
 						scope.calculatorController.insertDecimal();
 						break;
 					case 8:
-						scope.calculatorController.resetModel();
+						if (!event.shiftKey) {
+							scope.calculatorController.resetModel();
+							event.preventDefault();
+						}
 						break;
 					case 13:
 						scope.calculatorController.equate();
+						event.preventDefault();
 						break;
 					case 187:
 						if (event.shiftKey) {
