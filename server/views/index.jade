@@ -21,10 +21,13 @@ html(lang="en", ng-app="calculatorApp")
 		link(rel='stylesheet', href='vendor/skeleton/css/skeleton.css')
 		link(rel='stylesheet', href='public/css/custom.css')
 
+		base(href='#{base}')
+
 	body
 		.container
 			.docs-section
-				h6.docs-header SEE YOU LATER, CALCULATOR
+				h6.docs-header
+					img(src="/public/images/logo.png")
 				p Kristen, Henry, Joseph, Alex, Vince
 			hr
 			calculator(ng-controller="CalculatorController as calculatorController")

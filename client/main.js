@@ -13,7 +13,10 @@
 
 var angular = require('angular');
 
-var app = angular.module("calculatorApp", []);
+var app = angular.module("calculatorApp", [])
+.config(function($locationProvider) {
+  $locationProvider.html5Mode(true).hashPrefix('!');
+});
 
 // Let's talk about angular for a bit.
 // Angular handles all three of the M-V-C.

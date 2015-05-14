@@ -9,14 +9,65 @@ var CalculatorModel = require('../models/CalculatorModel.js');
  **/
 
 module.exports = class CalculatorController {
-	constructor() {
+	constructor($interval, $location, $http, $scope) {
 		// Define instance variables
-		this.model = new CalculatorModel();
+		this.$location = $location;
 		this.insertingDecimal = false
+		this.model = new CalculatorModel();
+		this.test = '';
+
+		var waitForRun = true;
+		var previousModel = null;
+
+		// Request initial model.
+		$http.get('/api/request', {params: {id: this.getId()}})
+		.success((data, status, headers, config) => {
+			this.model.left = data.left;
+			this.model.right = data.right;
+			this.model.operator = data.operator;
+			previousModel = this.model.clone();
+			waitForRun = false;
+		});
+
+		// Save every 500ms
+		this.savetimer = $interval(() => {
+			if (waitForRun) return;
+
+			// If our model has changed, upload it.
+			if (!this.model.equals(previousModel)) {
+				$http.post('/api/update', {id: this.getId(), model: this.model})
+				.success((data, status, headers, config) => {
+					previousModel = this.model.clone();
+					waitForRun = false;
+				});
+			// If our model is the same, update to server's.
+			} else {
+				$http.get('/api/request', {params: {id: this.getId()}})
+				.success((data, status, headers, config) => {
+					this.model.left = data.left;
+					this.model.right = data.right;
+					this.model.operator = data.operator;
+					previousModel = this.model.clone();
+					waitForRun = false;
+				});
+			}
+
+		}, 500);
+
+		$scope.$on('$destroy', function() {
+			$interval.cancel(stop);
+		});
+	}
+
+	getId() {
+		return this.$location.path().substring(1);
 	}
 
 	resetModel() {
-		this.model = new CalculatorModel();
+		this.test = 'hey';
+		this.model.left = ''
+		this.model.right = ''
+		this.model.operator = ''
 		this.insertingDecimal = false;
 	}
 
@@ -29,6 +80,15 @@ module.exports = class CalculatorController {
 			this.model.right = '';
 		}
 
+		// Don't append to something that isn't a number.
+		if (
+			(
+				Number.isNaN(parseFloat(this.model.right)) ||
+				!Number.isFinite(parseFloat(this.model.right))
+			)
+			&& this.model.right != ''
+		) return;
+
 		this.model.right += number.toString();
 	}
 
@@ -40,6 +100,15 @@ module.exports = class CalculatorController {
 		if (this.model.left != '' && this.model.right == '' && this.model.operator == '') {
 			this.resetModel();
 		}
+
+		// Don't append to something that isn't a number.
+		if (
+			(
+				Number.isNaN(parseFloat(this.model.right)) ||
+				!Number.isFinite(parseFloat(this.model.right))
+			)
+			&& this.model.right != ''
+		) return;
 
 		this.model.right += '.';
 
