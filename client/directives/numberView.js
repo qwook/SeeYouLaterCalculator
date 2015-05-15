@@ -1,9 +1,16 @@
 
-// Directives "describe" the view and link to it.
-module.exports = {
-	restrict: 'E',
-	scope: {
-		model: '='
-	},
-	template: require('./views/numberView.jade')()
+/**
+ * Number View Directive
+ * @author Yu'N Co
+ * @description View to display the numbers and operators in a calculation.
+ */
+
+module.exports = function() {
+	return {
+		restrict: 'E',
+		scope: {
+			model: '=' // model to display
+		},
+		template: require('./views/numberView.jade')()
+	};
 };

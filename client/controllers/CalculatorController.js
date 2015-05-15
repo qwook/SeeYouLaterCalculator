@@ -1,76 +1,37 @@
 
-var CalculatorModel = require('../models/CalculatorModel.js');
-
 /**
  * Calculator Controller
- * ----------------
- * Calculator controller for MVC
- *
- **/
-
+ * @description Controller for calculating an equation
+ * given left and right numbers, and an operation.
+ */
 module.exports = class CalculatorController {
-	constructor($interval, $location, $http, $scope) {
+	constructor(CalculatorModel, CalculatorWebSync, $interval, $scope) {
 		// Define instance variables
-		this.$location = $location;
 		this.insertingDecimal = false
 		this.model = new CalculatorModel();
 		this.test = '';
 
-		var waitForRun = true;
-		var previousModel = null;
-
-		// Request initial model.
-		$http.get('/api/request', {params: {id: this.getId()}})
-		.success((data, status, headers, config) => {
-			this.model.left = data.left;
-			this.model.right = data.right;
-			this.model.operator = data.operator;
-			previousModel = this.model.clone();
-			waitForRun = false;
-		});
-
-		// Save every 500ms
-		this.savetimer = $interval(() => {
-			if (waitForRun) return;
-
-			// If our model has changed, upload it.
-			if (!this.model.equals(previousModel)) {
-				$http.post('/api/update', {id: this.getId(), model: this.model})
-				.success((data, status, headers, config) => {
-					previousModel = this.model.clone();
-					waitForRun = false;
-				});
-			// If our model is the same, update to server's.
-			} else {
-				$http.get('/api/request', {params: {id: this.getId()}})
-				.success((data, status, headers, config) => {
-					this.model.left = data.left;
-					this.model.right = data.right;
-					this.model.operator = data.operator;
-					previousModel = this.model.clone();
-					waitForRun = false;
-				});
-			}
-
-		}, 500);
-
+		// Start autoupdating
+		var autoupdate = CalculatorWebSync.autoupdate(this.model);
 		$scope.$on('$destroy', function() {
-			$interval.cancel(stop);
+			$interval.cancel(autoupdate);
 		});
 	}
 
-	getId() {
-		return this.$location.path().substring(1);
-	}
-
+	/**
+	 * Clear / reset the model to default settings.
+	 */
 	resetModel() {
-		this.test = 'hey';
 		this.model.left = ''
 		this.model.right = ''
 		this.model.operator = ''
 		this.insertingDecimal = false;
 	}
 
+	/**
+	 * Concatenate a number to working number
+	 * @param  {Number} number to concatenate with
+	 */
 	insertNumber(number) {
 		if (this.model.left != '' && this.model.right == '' && this.model.operator == '') {
 			this.resetModel();
@@ -90,8 +51,12 @@ module.exports = class CalculatorController {
 		) return;
 
 		this.model.right += number.toString();
+
 	}
 
+	/**
+	 * Concatenate a decimal to the end of the number
+	 */
 	insertDecimal() {
 		if (this.insertingDecimal) {
 			return;
@@ -115,6 +80,10 @@ module.exports = class CalculatorController {
 		this.insertingDecimal = true;
 	}
 
+	/**
+	 * Set the operator for the current calculation.
+	 * @param  {String} the operator
+	 */
 	insertOperator(operator) {
 		this.equate();
 
@@ -128,9 +97,13 @@ module.exports = class CalculatorController {
 		}
 
 		this.model.operator = operator;
+		
+		this.clamp();
 	}
 
-	// Calculate the current operation.
+	/**
+	 * Calculate the current equation.
+	 */
 	equate() {
 
 		// We have operands, now equate for the corresponding operator.
@@ -153,28 +126,88 @@ module.exports = class CalculatorController {
 		}
 
 		this.insertingDecimal = false;
+
+		this.clamp();
 	}
 
+	/**
+	 * Calculate the sin function for the current working operation.
+	 */
 	mutatorSin() {
 		this.equate();
 
 		if (this.model.right == '') return;
 
 		this.model.right = Math.sin(parseFloat(this.model.right)).toString();
+
+		this.clamp();
 	}
 
+	/**
+	 * Calculate the cos function for the current working operation.
+	 */
 	mutatorCos() {
 		this.equate();
 
 		if (this.model.right == '') return;
 
 		this.model.right = Math.cos(parseFloat(this.model.right)).toString();
+
+		this.clamp();
 	}
 
+	/**
+	 * Calculate a fairly bad tip given the current working operation.
+	 */
+	badTip() {
+		this.equate();
+
+		if (this.model.right == '') return;
+
+		this.model.right = (parseFloat(this.model.right) * 0.10).toString();
+
+		this.clamp();
+	}
+
+	/**
+	 * Calculate an okay tip given the current working operation.
+	 */
+	okayTip() {
+		this.equate();
+
+		if (this.model.right == '') return;
+
+		this.model.right = (parseFloat(this.model.right) * 0.15).toString();
+
+		this.clamp();
+	}
+
+	/**
+	 * Flip the parity of the working number.
+	 */
 	flipSign() {
 		if (this.model.right == '') return;
 
 		this.model.right = (-1 * parseFloat(this.model.right)).toString();
+
+		this.clamp();
+	}
+
+	/**
+	 * Ensure that a number isn't too big.
+	 */
+	clamp() {
+		// Don't clamp if it's not a number
+		if (
+			(
+				Number.isNaN(parseFloat(this.model.right)) ||
+				!Number.isFinite(parseFloat(this.model.right))
+			)
+			&& this.model.right == ''
+		) return;
+
+		// Clamp to 6 digits
+		this.model.right = (Math.floor(parseFloat(this.model.right) * 1000000) / 1000000).toString()
 	}
 
 };

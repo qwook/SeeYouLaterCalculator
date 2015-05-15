@@ -1,4 +1,11 @@
 
+/**
+ * Main Server Backend
+ * @author Yu'N Co
+ * @description Handles delivering files to browser
+ * and API for updating/delivering models from the database.
+ */
+
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -26,8 +33,12 @@ app.use(bodyParser.json());
 app.use('/public', express.static( path.join( __dirname, '..', 'public' ) ));
 app.use('/vendor', express.static( path.join( __dirname, '..', 'vendor' ) ));
 
+// access the "models" collection which contains the models for the calculator
 var models = db.collection('models');
 
+/**
+ * Updates calculator model.
+ */
 app.post('/api/update', function(req, res) {
 	// Update the calculator model in the database
 	models.update({ id: { $eq: req.body.id } }, {
@@ -42,6 +53,9 @@ app.post('/api/update', function(req, res) {
 	});
 })
 
+/**
+ * Requests a new calculator model.
+ */
 app.get('/api/request', function(req, res) {
 	// Request a calculator model from the database
 	models.findOne({ id: { $eq: req.query.id } }, function(err, result) {
@@ -58,12 +72,16 @@ app.get('/api/request', function(req, res) {
 	});
 })
 
-// render page when user goes to root. (http://localhost:3000/)
+/**
+ * Render the page when user access root.
+ */
 app.get('/*', function(req, res) {
 	res.render('index', {base: req.path});
 });
 
-// start the server
+/**
+ * Start the server.
+ */
 var server = app.listen(3000, function() {
 	var host = server.address().address;
 	var port = server.address().port;
