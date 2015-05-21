@@ -157,32 +157,6 @@ module.exports = class CalculatorController {
 	}
 
 	/**
-	 * Calculate a fairly bad tip given the current working operation.
-	 */
-	badTip() {
-		this.equate();
-
-		if (this.model.right == '') return;
-
-		this.model.right = (parseFloat(this.model.right) * 0.10).toString();
-
-		this.clamp();
-	}
-
-	/**
-	 * Calculate an okay tip given the current working operation.
-	 */
-	okayTip() {
-		this.equate();
-
-		if (this.model.right == '') return;
-
-		this.model.right = (parseFloat(this.model.right) * 0.15).toString();
-
-		this.clamp();
-	}
-
-	/**
 	 * Flip the parity of the working number.
 	 */
 	flipSign() {
