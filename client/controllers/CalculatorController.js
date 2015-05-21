@@ -44,8 +44,8 @@ module.exports = class CalculatorController {
 		// Don't append to something that isn't a number.
 		if (
 			(
-				Number.isNaN(parseFloat(this.model.right)) ||
-				!Number.isFinite(parseFloat(this.model.right))
+				isNaN(parseFloat(this.model.right)) ||
+				!isFinite(parseFloat(this.model.right))
 			)
 			&& this.model.right != ''
 		) return;
@@ -69,8 +69,8 @@ module.exports = class CalculatorController {
 		// Don't append to something that isn't a number.
 		if (
 			(
-				Number.isNaN(parseFloat(this.model.right)) ||
-				!Number.isFinite(parseFloat(this.model.right))
+				isNaN(parseFloat(this.model.right)) ||
+				!isFinite(parseFloat(this.model.right))
 			)
 			&& this.model.right != ''
 		) return;
@@ -174,8 +174,8 @@ module.exports = class CalculatorController {
 		// Don't clamp if it's not a number
 		if (
 			(
-				Number.isNaN(parseFloat(this.model.right)) ||
-				!Number.isFinite(parseFloat(this.model.right))
+				isNaN(parseFloat(this.model.right)) ||
+				!isFinite(parseFloat(this.model.right))
 			)
 			&& this.model.right == ''
 		) return;
