@@ -9,18 +9,18 @@ The server code is practically boilerplate and not very important to the project
 
 # Frameworks
 ## Client:
-Angular - handles MVC  
-BabelJS - allows for usage of latest javascript version  
+**Angular** - handles MVC  
+**BabelJS** - allows for usage of latest javascript version  
 	it just translates latest javascript version so that older javascript engines can use it.  
-Jade - translates to HTML, used for templates and defining the html of buttons and layout  
+**Jade** - translates to HTML, used for templates and defining the html of buttons and layout  
   
 ## Server:
-Browserify - compiles all the clientside scripts into one file
-Express - framework used to host the website (higher level than nodejs, allows hosting websites with smaller amounts of commands.)
-NodeJS - the engine used to host the website (built on C++/v8 interprets javascript)
+**Webpack** - compiles all the clientside scripts into one file
+**Express** - framework used to host the website (higher level than nodejs, allows hosting websites with smaller amounts of commands.)
+**NodeJS** - the engine used to host the website (built on C++/v8 interprets javascript)
   
 ## Development:
-Gulp which is used as like "make"  
+Grunt which is used as like "make"  
 	automates commands needed to compile for client and server.
   
 # Dependencies
@@ -28,28 +28,23 @@ Node.JS and NPM:
 https://nodejs.org/  
 You can also download it from `brew` if you have brew on OSX.
 
-This app uses *gulp* for task running.  
+This app uses ***grunt*** for task running.  
 Gulp is used for simplifying complex tasks into a single command.  
 You can think of Gulpfiles as Makefiles.  
-To put it simple: instead of running ten different commands, you only run one.
-`npm install -g gulp`
+To put it simple: instead of running ten different commands, you only run one.  
+`sudo npm install -g grunt`
 
-This app uses *bower* for managing client packages.  
+This app uses ***bower*** for managing client packages.  
 Bower is usually used to download and maintain latest versions  
-of packages like `jquery` or `angular`.
-`npm install -g bower`
+of packages like `jquery` or `angular`.  
+`sudo npm install -g bower`
 
 # Building
-`npm install`
+`sudo npm install`
 `bower install`
   
 To build the client bundle.js, run
-`gulp watch`
+`grunt bundle`
 
 # Running Server
-`gulp start`
-
-# Structure
-./public/javascripts/bundle.js is automatically generated from the ./client/ folder.
-/vendor/ is automatically generated from bower and contains third-party libraries.
-/server/ contains files pertaining to express and sending files.
+`grunt server`
