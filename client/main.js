@@ -11,8 +11,6 @@
  and when defining controllers and views.
  */
 
-var angular = require('angular');
-
 var app = angular.module("calculatorApp", [])
 // this is to grab the address bar URL
 // mainly used for creating different sessions
